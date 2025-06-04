@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Кликер и экран загрузки</title>
+<style>
+  /* Общие стили */
+  body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    text-align: center;
+    background-color: #f0f0f0;
+  }
+
+  /* Экран загрузки */
+  #loading-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    z-index: 9999;
+  }
+
+  /* Размер изображения загрузочного экрана */
+  #loading-image {
+    max-width: none; /* отключить ограничение по ширине */
+    width: 480px;   /* установить ширину */
+    height: 1000px;   /* установить высоту */
+  }
+
+  /* Общие стили для всех изображений (если есть) */
+  img {
+    width: 2400px;
+    height: 1080px;
+    object-fit: cover; /* чтобы сохранить пропорции и заполнить размеры */
+  }
+
+  /* Основной контент скрыт по умолчанию */
+  #main-content {
+    display: none;
+    padding: 20px;
+  }
+
+  /* Стиль для кнопки кликера */
+  #clicker-btn {
+    padding: 15px 30px;
+    font-size: 24px;
+    cursor: pointer;
+    background-color: #4CAF50; /* зеленый */
+    color: white;
+    border: none;
+    border-radius: 8px;
+    transition: background-color 0.3s;
+  }
+
+  #clicker-btn:hover {
+    background-color: #45a049;
+  }
+</style>
+</head>
+<body>
+
+<!-- Экран загрузки -->
+<div id="loading-screen">
+  <img id="loading-image" src="" alt="Загрузка..." />
+</div>
+
+<!-- Основной контент -->
+<div id="main-content">
+  <h1>Добро пожаловать!</h1>
+  <button id="clicker-btn">Кликер</button>
+</div>
+
+<script>
+/* Массив изображений для загрузочного экрана */
+// Вставьте свои изображения из папки img
+const images = [
+  'img/5.jpg', // замените на свой путь
+  'img/6.jpg',
+  'img/7.jpg',
+  'img/8.jpg',
+  'img/9.jpg',
+  'img/10.jpg',
+  'img/1.jpg'
+];
+
+const loadingImage = document.getElementById('loading-image');
+const loadingScreen = document.getElementById('loading-screen');
+const mainContent = document.getElementById('main-content');
+
+let currentImageIndex = -1;
+
+// Функция для показа следующего изображения
+function showNextImage() {
+  currentImageIndex++;
+  
+  if (currentImageIndex >= images.length) {
+    // Все изображения показаны, скрываем экран загрузки
+    loadingScreen.style.display = 'none';
+    
+    // Показываем основной контент
+    mainContent.style.display = 'block';
+    
+    return;
+  }
+  
+  // Устанавливаем текущую картинку
+  loadingImage.src = images[currentImageIndex];
+  
+  // Запланировать следующий показ через 2 секунды
+  setTimeout(showNextImage,2000);
+}
+
+// Запускаем показ изображений при загрузке страницы
+window.onload = () => {
+  
+  // Начинаем цикл показа изображений
+  showNextImage();
+};
+</script>
+
+</body>
+</html>
